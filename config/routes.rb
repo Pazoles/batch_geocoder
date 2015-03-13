@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
-  get 'home'    => 'static_pages#home'
-
-  get 'signup'  => 'users#new'
 
   resources :locations do
     collection { post :import }
   end
+  
+  resources :users
 
   root              'locations#index'
-
+  get 'home'    => 'static_pages#home'
+  get 'signup'  => 'users#new'
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".
 
