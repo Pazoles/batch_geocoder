@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
 
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   resources :locations do
     collection { post :import }
   end
-  
+  resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :users
+  resources :account_activations, only: [:edit]
 
   root              'locations#index'
   get 'home'    => 'static_pages#home'
