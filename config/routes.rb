@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   resources :users
   resources :account_activations, only: [:edit]
 
-  root              'locations#index'
-  get 'home'    => 'static_pages#home'
+  root              'static_pages#home'
+  get 'all'    => 'locations#index'
   get 'signup'  => 'users#new'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
