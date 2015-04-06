@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.remotipart
+//= require jquery-fileupload
+//= require dropzone
 //= require bootstrap
 //= require turbolinks
 //= require_tree .

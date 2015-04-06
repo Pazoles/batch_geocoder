@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'password_resets/new'
+    get 'progress-job/:job_id' => 'progress_job/progress#show'
 
   get 'password_resets/edit'
 

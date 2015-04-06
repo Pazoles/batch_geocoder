@@ -4,11 +4,18 @@
 </p>
 
 <h1>Listing Locations</h1>
+
+
+
 <p>
   Download:
 <%= search_field(:location, :source) %>
   <%= link_to "CSV", locations_path(format: "csv") %>
-</p>
+  
+  
+</p><%= will_paginate @locations %>
+
+
 <table>
   <thead>
     <tr>
@@ -17,8 +24,9 @@
       <th>Longitude</th>
       <th>Precision</th>
       <th>Source</th>
-
-      <th colspan="4"></th>
+			<th>User</th>
+			<th>ID</th>
+      <th colspan="5"></th>
     </tr>
   </thead>
 
@@ -30,6 +38,8 @@
       <td><%= location.longitude %></td>
       <td><%= location.location_type %></td>
       <td><%= location.source %></td>
+      <td><%= location.user_id %></td>      
+      <td><%= location.externalid %></td>
       <td><%= link_to 'Show', location %></td>
       <td><%= link_to 'Edit', edit_location_path(location) %></td>
       <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -37,6 +47,10 @@
     <% end %>
   </tbody>
 </table>
+
+
+      <%= will_paginate @locations %>
+
 
 <br>
 

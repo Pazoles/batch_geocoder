@@ -36,6 +36,15 @@ textarea {
   }
 }
 
+input {
+    border-radius: 5px;
+}
+
+input[type="submit"]  {
+  font-size: 1.5em;
+  height: 2em;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -68,19 +77,45 @@ p {
 
 #logo {
   float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
+  display: inline-block;
+  margin: 0 auto;
+    padding: 15px 20px;
+
+  font-size: 2em;
   color: white;
   text-transform: uppercase;
   letter-spacing: -1px;
-  padding-top: 9px;
   font-weight: bold;
-  &:hover {
-    color: white;
+  &:hover {    
     text-decoration: none;
+    color: #dfdfdf;
+    background-color: transparent;
   }
 }
 
+.navbar {
+  height: 50px;
+  min-height: 50px;
+  background-color: #52bca4 ;
+  /*#20202a;*/
+  color: #fff;
+  .navbar-nav > li > a {
+    color: #fff;
+    &:hover, &:focus{    
+    text-decoration: none;
+    color: #dfdfdf;
+    background-color: transparent;
+      }
+    }
+  
+  }
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus, .nav .open > a:active   {
+     background-color: transparent;
+       }  
+.navbar-nav > li > .dropdown-menu{
+    color: #20202a;
+    border: none;
+  }  
 /* footer */
 
 footer {
@@ -164,8 +199,21 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
-input {
-  height: auto !important;
+.btn-grn {
+  background-color:#52bca4;
+  &:hover{
+      background-color:#52bca4;
+  }
+  a{
+    color:#fff;
+      &:visted{
+        color:    #666;
+      }
+      &:hover{
+        color: #dfdfdf;
+      }
+  }
+  
 }
 
 #error_explanation {

@@ -1,5 +1,58 @@
-<div class="center jumbotron">
-  <h1>Welcome to the Geocoder</h1>
+<% if logged_in? %>
 
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+<h1>Import File for Geocoding</h1>
+<%= form_tag import_locations_path, multipart: true, remote: true, id:'fileupload', class: 'dropzone'  do %>
+  <div class="fallback">
+
+<%= file_field_tag :file %>
+<%= submit_tag "GO!" %>
+  </div>
+<%= token_tag form_authenticity_token %>
+<% end %>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+    <span class="sr-only">40% Complete (success)</span>
+  </div>
 </div>
+<div class='container'>
+<div class='geocode'>
+<div class='well'>
+<div class='row'>
+<div class='col-xs-12'>
+<div class='progress-status text-primary'>
+0/0
+</div>
+</div>
+</div>
+<div class='row'>
+<div class='col-xs-12'>
+<div class='progress progress-striped active'>
+<div class='progress-bar'>
+<div class='text-primary'>
+0%
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<%= will_paginate @feed_items %>
+  	
+<div class="feed">
+  <%= render 'shared/feed' %>
+</div>
+
+<%= will_paginate @feed_items %>
+
+<% else %>
+<div class="center jumbotron">
+  <h1>(gee oh coh dur)</h1>
+
+  <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-grn" %>
+</div>
+<%end%>
+
+

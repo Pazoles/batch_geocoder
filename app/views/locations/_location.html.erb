@@ -1,0 +1,22 @@
+<li id="micropost-<%= location.id %>">
+  <span class="user"><%= link_to location.user.name, location.user %></span>
+  <span class="content">
+    <tbody>
+      <tr>
+        <td><%= location.address %></td>
+        <td><%= location.latitude %></td>
+        <td><%= location.longitude %></td>
+        <td><%= location.location_type %></td>
+        <td><%= location.source %></td>
+        <td><%= location.user_id %></td>
+        <td><%= location.externalid %></td>
+      </tr>
+    </tbody> 
+    <% if current_user?(location.user) %>
+    <%= link_to "delete", location, method: :delete,
+    data: { confirm: "You sure?" }
+    %>
+    <% end %>
+     </span>
+
+</li>

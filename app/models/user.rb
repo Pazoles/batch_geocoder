@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
+  has_many :locations, dependent: :destroy
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
   before_save { email.downcase! }
-  
   validates :name,  presence: true, length: { maximum: 60 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
@@ -57,6 +57,10 @@ class User < ActiveRecord::Base
   
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+  
+  def feed
+    Location.where("user_id =?", id).order('created_at DESC').map(&:source).uniq
   end
   
   private

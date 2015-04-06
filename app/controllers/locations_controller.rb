@@ -1,92 +1,74 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user,   only: :destroy
   def import
-    #begin
-    Location.import(params[:file])
-    redirect_to root_url, notice: "Locations imported."
-    #rescue
-    #  redirect_to root_url, notice: "Invalid CSV file format."
-    #end
+    require 'csv'
+    #GeocoderWorker.perform_async(current_user.id, params[:file].path, params[:file].original_filename)
+    @job = Delayed::Job.enqueue ImportJob.new(current_user.id, params[:file].path, params[:file].original_filename)
+    #@user = current_user
+    #@user.locations.import(params[:file], @user.id)
+    respond_to do |format|
+      format.js
+      format.json{ render :json => @media }
+    end
   end
 
-  # GET /locations
-  # GET /locations.json
+  def update_feed
+    respond_to do |format|
+      format.html { redirect_to root_url }
+      format.js
+    end
+  end
+
   def index
     @sources = Location.uniq.pluck(:source)
     #@source = @Location.source
-    @locations = Location.order(created_at: :desc)
+    @locations = Location.order(created_at: :desc).paginate(page: params[:page])
+    @locationexport = Location.where("source = ?", params[:source])
     #@exportlocations = Location.where("source = ?",@source).order(created_at: :desc)
     respond_to do |format|
       format.html
-      format.csv { 
-        response.headers['Content-Disposition'] = "attachment; filename=\"#{@locations.where("source is not null").first.source}\""
-        render text: @locations.to_csv}
+      format.csv {
+        response.headers['Content-Disposition'] = "attachment; filename=\"#{@locationexport.first.source}\""
+        render text: @locationexport.to_csv}
     end
   end
 
-  # GET /locations/1
-  # GET /locations/1.json
   def show
   end
 
-  # GET /locations/new
   def new
     @location = Location.new
+    @user = current_user
   end
 
-  # GET /locations/1/edit
   def edit
   end
 
-  # POST /locations
-  # POST /locations.json
   def create
-    @location = Location.new(location_params)
+    @location = current_user.locations.build(location_params)
+    update_feed
 
-    respond_to do |format|
-      if @location.save
-        format.html { redirect_to @location, notice: 'Location was successfully created.' }
-        format.json { render :show, status: :created, location: @location }
-      else
-        format.html { render :new }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
-  # PATCH/PUT /locations/1
-  # PATCH/PUT /locations/1.json
-  def update
-    respond_to do |format|
-      if @location.update(location_params)
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
-        format.json { render :show, status: :ok, location: @location }
-      else
-        format.html { render :edit }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /locations/1
-  # DELETE /locations/1.json
   def destroy
     @location.destroy
-    respond_to do |format|
-      format.html { redirect_to locations_url, notice: 'Location was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:success] = "Location deleted"
+    redirect_to request.referrer || root_url
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  def correct_user
+    @location = current_user.locations.find_by(id: params[:id])
+    redirect_to root_url if @location.nil?
+  end
+
   def set_location
     @location = Location.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def location_params
-    params.require(:location).permit(:address, :latitude, :longitude, :source)
+    params.require(:location).permit(:address, :latitude, :longitude, :source, :externalid)
   end
 end

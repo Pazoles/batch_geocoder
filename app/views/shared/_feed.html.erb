@@ -1,0 +1,18 @@
+<% if @feed_items.any? %>
+  <table>
+  <thead>
+    <tr>
+      <th colspan="1">  <h3>Geocoded Files</h3>
+</th>
+    </tr>
+  </thead>
+
+  <tbody id="feed">
+    <% @feed_items.each do |x| %>
+    <tr><td>  <%= link_to x, locations_path(format: "csv", :source => x ) %></td></tr>
+
+    <% end %>
+  </tbody>
+</table>
+
+<% end %>
