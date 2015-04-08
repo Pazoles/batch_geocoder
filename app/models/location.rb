@@ -45,24 +45,25 @@ class Location < ActiveRecord::Base
   #  end
  # end
   
-  class << self
+  #class << self
 
-    def importcsv(file_path, file_name, user_id)
-        @user = User.find_by(id: user_id)
-        time = Time.now.strftime("%Y-%m-%d_%H-%M-%S")
-        CSV.foreach(file_path, headers: true) do |row|
-          new = row.to_hash
-          new.merge!(source: [time,file_name].join('_'))
-          @user.locations.create! new
-        end 
-    end 
-    handle_asynchronously :importcsv
-  end
+#    def importcsv(file_path, file_name, user_id)
+###        @user = User.find_by(id: user_id)
+#        time = Time.now.strftime("%Y-%m-%d_%H-%M-%S")
+#        CSV.foreach(file_path, headers: true) do |row|
+#          new = row.to_hash
+#          new.merge!(source: [time,file_name].join('_'))
+##          @user.locations.create! new
+ #       end 
+#    end 
+#    handle_asynchronously :importcsv
+#  end
 
   # My importer as a class method
-  def self.import(file, user_id)
-    Location.importcsv(file.path,file.original_filename, user_id)
-  end
+#  def self.import(file, user_id)
+#    CSV.readlines(file.path).size
+#    Location.importcsv(file.path,file.original_filename, user_id)
+#  end
 
 
 end

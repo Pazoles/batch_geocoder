@@ -1,46 +1,42 @@
+<% @job = current_user %>
 <% if logged_in? %>
 
 <h1>Import File for Geocoding</h1>
 <%= form_tag import_locations_path, multipart: true, remote: true, id:'fileupload', class: 'dropzone'  do %>
-  <div class="fallback">
+<div class="fallback">
 
-<%= file_field_tag :file %>
-<%= submit_tag "GO!" %>
-  </div>
+  <%= file_field_tag :file %>
+  <%= submit_tag "GO!", id:'content' %>
+</div>
 <%= token_tag form_authenticity_token %>
 <% end %>
 
-<div class="progress">
-  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-    <span class="sr-only">40% Complete (success)</span>
+
+
+<div class="export">
+  <div class="well" >
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="progress-status text-primary"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="progress progress-striped active">
+          <div class="progress-bar">
+            <div class="text-primary">
+              0%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div class='container'>
-<div class='geocode'>
-<div class='well'>
-<div class='row'>
-<div class='col-xs-12'>
-<div class='progress-status text-primary'>
-0/0
-</div>
-</div>
-</div>
-<div class='row'>
-<div class='col-xs-12'>
-<div class='progress progress-striped active'>
-<div class='progress-bar'>
-<div class='text-primary'>
-0%
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <%= link_to 'View csv', '/system/export.csv', class: 'btn btn-success export-link', style: 'display:none' %>
 </div>
 
 <%= will_paginate @feed_items %>
-  	
+
 <div class="feed">
   <%= render 'shared/feed' %>
 </div>
@@ -55,4 +51,43 @@
 </div>
 <%end%>
 
+<script>
+  var interval;
+	$(document).ready(function() {
+		jQuery('#content').click(function(e) {
+			$("#content").after("<p>SUCCESS</p>");
+			alert('Success!');
+			interval = setInterval(function(){
+			$.ajax({
+				 url: '/progress-job/4280',
+				success : function(job) {
+					var stage, progress;
+
+					// If there are errors
+					if (job.last_error != null) {
+						$('.progress-status').addClass('text-danger').text(job.progress_stage);
+						$('.progress-bar').addClass('progress-bar-danger');
+						$('.progress').removeClass('active');
+						clearInterval(interval);
+					}
+
+					progress = job.progress_current / job.progress_max * 100;
+					progress = progress.toFixed(2)
+					// In job stage
+					if (progress.toString() !== 'NaN') {
+						$('.progress-status').text(job.progress_current + '/' + job.progress_max);
+						$('.progress-bar').css('width', progress + '%').text(progress + '%');
+					}
+				},
+				error : function() {
+					// Job is no longer in database which means it finished successfuly
+					$('.progress').removeClass('active');
+					$('.progress-bar').css('width', '100%').text('100%');
+					$('.progress-status').text('Successfully geocoded!');
+					clearInterval(interval);
+				}
+			});},100);
+		});
+	}); 
+</script>
 

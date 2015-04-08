@@ -7,10 +7,6 @@ class LocationsController < ApplicationController
     @job = Delayed::Job.enqueue ImportJob.new(current_user.id, params[:file].path, params[:file].original_filename)
     #@user = current_user
     #@user.locations.import(params[:file], @user.id)
-    respond_to do |format|
-      format.js
-      format.json{ render :json => @media }
-    end
   end
 
   def update_feed
