@@ -1,14 +1,44 @@
 <% if logged_in? %>
+<div class="panel panel-default example">
+  <div class="panel-heading">
+   <h1 class="center"> Required File Format</h1>
+  </div>
+  <div class="panel-body">
+    <p class="center">
+      Please make sure you save your file as a CSV with the following layout:
+    </p>
+  </div>
+  <!-- Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="center">externalid</th >
+        <th class="center">address</th>
+        <th class="center">city</th>
+        <th class="center">state</th>
+        <th class="center">zip</th>
+        <th class="center" colspan="5"></th>
+      </tr>
+    </thead>
 
+    <tbody>
+      <tr>
+        <td>00685212</td>
+        <td>123 Main St.</td>
+        <td>Newark</td>
+        <td>DE</td>
+        <td>19711</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <h1>Import File for Geocoding</h1>
 <%= form_tag import_locations_path, multipart: true, remote: true, id:'fileupload'  do %>
 
-  <%= file_field_tag :file %>
-  <%= submit_tag "GO!", id:'content' %>
+<%= file_field_tag :file %>
+<%= submit_tag "GO!", id:'content' %>
 <%= token_tag form_authenticity_token %>
 <% end %>
-
-
 
 <div class="progress-container">
   <div class="well" style= "display:none">
@@ -48,7 +78,5 @@
 </div>
 <%end%>
 
-<script>
- 
-</script>
+<script></script>
 
