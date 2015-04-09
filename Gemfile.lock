@@ -75,6 +75,8 @@ GEM
       rails (> 3.1)
     erubis (2.7.0)
     execjs (2.5.1)
+    foreman (0.78.0)
+      thor (~> 0.19.1)
     geocoder (1.2.8)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
@@ -106,6 +108,7 @@ GEM
     multi_json (1.11.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    pg (0.18.1)
     progress_job (0.0.4)
       delayed_job
     rack (1.6.0)
@@ -201,11 +204,13 @@ DEPENDENCIES
   daemons
   delayed_job_active_record
   dropzonejs-rails
+  foreman
   geocoder
   jbuilder (~> 2.0)
   jquery-fileupload-rails
   jquery-rails
   mocha
+  pg
   progress_job
   rails (= 4.2.0)
   rails_12factor (= 0.0.2)
