@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get 'password_resets/new'
   get 'progress-job/:job_id' => 'progress_job/progress#show'
-
+  get 'static_pages/after_import' => 'static_pages#after_import'
   get 'password_resets/edit'
     
   resources :locations do

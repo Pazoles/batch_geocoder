@@ -4,4 +4,10 @@ class StaticPagesController < ApplicationController
       @feed_items = current_user.feed.paginate(page: params[:page])
     end
   end
+  
+    def after_import
+    @feed_items = current_user.feed.paginate(page: params[:page])
+    render :partial => 'shared/feed'
+  end
+  
 end

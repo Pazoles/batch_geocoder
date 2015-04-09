@@ -7,7 +7,13 @@ class LocationsController < ApplicationController
     @job = Delayed::Job.enqueue ImportJob.new(current_user.id, params[:file].path, params[:file].original_filename)
     #@user = current_user
     #@user.locations.import(params[:file], @user.id)
+    sleep 4
+    respond_to do |format|
+      format.js
+    end
   end
+  
+
 
   def update_feed
     respond_to do |format|
@@ -20,7 +26,7 @@ class LocationsController < ApplicationController
     @sources = Location.uniq.pluck(:source)
     #@source = @Location.source
     @locations = Location.order(created_at: :desc).paginate(page: params[:page])
-    @locationexport = Location.where("source = ?", params[:source])
+    @locationexport = Location.where("source = ? AND location_type = ?", params[:source], 'ROOFTOP')
     #@exportlocations = Location.where("source = ?",@source).order(created_at: :desc)
     respond_to do |format|
       format.html

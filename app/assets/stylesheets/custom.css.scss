@@ -37,12 +37,22 @@ textarea {
 }
 
 input {
-    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom:10px;
+    padding: 2px;
 }
 
 input[type="submit"]  {
   font-size: 1.5em;
   height: 2em;
+}
+
+.progress-bar {
+  background-color: #52bca4 ;
+}
+
+.progress-container {
+  margin-top: 50px;
 }
 
 /* typography */
