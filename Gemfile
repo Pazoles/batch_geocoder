@@ -20,7 +20,6 @@ gem 'jquery-fileupload-rails'
 gem 'remotipart'
 gem 'dropzonejs-rails'
 gem 'daemons'
-gem 'foreman'
 
 group :development, :test do
   gem 'byebug'
