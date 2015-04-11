@@ -8,12 +8,18 @@ class LocationsController < ApplicationController
     #@user = current_user
     #@user.locations.import(params[:file], @user.id)
     sleep 4
-    respond_to do |format|
-      format.js
+
+    if @job.nil?
+      sleep 4
+      respond_to do |format|
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.js
+      end
     end
   end
-  
-
 
   def update_feed
     respond_to do |format|

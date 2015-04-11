@@ -55,6 +55,11 @@ input[type="submit"]  {
   margin-top: 50px;
 }
 
+.main {
+  width: 70%;
+  margin: 0 auto;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -224,23 +229,38 @@ input, textarea, select, .uneditable-input {
   width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
+      border-radius: 0px;
+
 }
 
 .btn-grn {
   background-color:#52bca4;
+      border-radius: 0px;
+
   &:hover{
       background-color:#52bca4;
   }
-  a{
-    color:#fff;
-      &:visted{
-        color:    #666;
+      
+  }
+  
+a.btn.btn-lg.btn-grn  {
+        color:#fff;
+        &:visted{
+        color:    #fff;
       }
       &:hover{
         color: #dfdfdf;
       }
-  }
-  
+}
+
+input.btn.btn-grn{
+        color:#fff;
+        &:visted{
+        color:    #fff;
+      }
+      &:hover{
+        color: #dfdfdf;
+      }
 }
 
 #error_explanation {
@@ -256,6 +276,11 @@ input, textarea, select, .uneditable-input {
   .form-control {
     color: $state-danger-text;
   }
+}
+
+.form-control {
+      border-radius: 0px;
+
 }
 
 .checkbox {
