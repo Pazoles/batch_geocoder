@@ -227,9 +227,18 @@ aside {
 }
 
 .gravatar_edit {
-  margin-top: 15px;
+  text-align:center;
+  margin: 15px 0px;
+  height: 150px;
+  img {
+    float: none;
+    margin: 0 auto;
+  }
 }
 
+#gravatar_edit_image{
+
+}
 /* forms */
 
 input, textarea, select, .uneditable-input {
