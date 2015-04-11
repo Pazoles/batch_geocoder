@@ -18,7 +18,9 @@
 					progress = job.progress_current / job.progress_max * 100;
 					progress = progress.toFixed(2);
 					// In job stage
-					if (progress.toString() !== 'NaN') {
+					if (job.progress_max == '0')
+						$('.progress-status').text('Queued');
+					else if (progress.toString() !== 'NaN') {
 						$('.progress-status').text(job.progress_current + '/' + job.progress_max);
 						$('.progress-bar').css('width', progress + '%').text(progress + '%');
 					}

@@ -1,1 +1,1 @@
-web: foreman start -f ProcfileFree
+web: foreman start -f ProcfileFree --concurrency="web=1,worker=2"
