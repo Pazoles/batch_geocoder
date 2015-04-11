@@ -31,7 +31,7 @@ class LocationsController < ApplicationController
   def index
     @sources = Location.uniq.pluck(:source)
     #@source = @Location.source
-    @locations = Location.order(created_at: :desc).paginate(page: params[:page])
+    @locations = Location.order(created_at: :desc).paginate(page: params[:page], :per_page => 10)
     @locationexport = Location.where("source = ? AND location_type = ?", params[:source], 'ROOFTOP')
     #@exportlocations = Location.where("source = ?",@source).order(created_at: :desc)
     respond_to do |format|
